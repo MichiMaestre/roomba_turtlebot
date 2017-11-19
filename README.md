@@ -44,6 +44,29 @@ roslaunch roomba_turtlebot roomba.launch
 
 Gazebo will start with the corridor map and a turtlebot moving around as it is supposed: turning when it detects an obstacle or moving forward when there is no obstacle.
 
-![gazebo](image)
+![gazebo](https://github.com/MichiMaestre/roomba-turtlebot/blob/master/images/gazebo.png)
+
+## Recording and inspecting bag files
+
+To record using rosbag, we have to launch `roomba.launch`but with the argument _rosbagFlag_ as true. If called as false or not called at all, the data will not be recorded.
+
+* To record data:
+
+```
+cd ~/ros_ws
+source devel/setup.bash
+roslaunch roomba_turtlebot roomba.launch rosbagFlag:=true
+```
+This will record the data in the `~/.ros` folder. To access it and see its information:
+
+```
+cd ~/.ros
+rosbag info roomba_bag.bag
+```
+
+* If the data recording is not needed, just launch:
+
+`roslaunch roomba_turtlebot roomba.launch` or `roslaunch roomba_turtlebot roomba.launch rosbagFlag:=false`
+
 
 
