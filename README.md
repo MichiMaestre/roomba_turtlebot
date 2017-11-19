@@ -1,8 +1,8 @@
-### Roomba Turtlebot
+# Roomba Turtlebot
 
 ## Overview
 
-
+* In this package, we create a node that makes a turtlebot to behave like a Roomba robot. It will sense the environment by checking if there are obstacles around. If there are no obstacles, the robot moves forward. If it detects an obstacle, it will rotate in place until it stops detecting it. The node subscribes to the laser scan data provided by the robot and publishes velocity commands to the velocity topic.
 
 ## Dependencies
 
