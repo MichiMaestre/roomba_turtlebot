@@ -40,8 +40,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 void robot::scanCallback(const sensor_msgs::LaserScan::ConstPtr& laser) {
     robot::lasers.clear();
     for (int i = 0; i < laser->ranges.size(); i++) {
-    	// Store all the laser reading in the vector
-    	robot::lasers.push_back(laser->ranges[i]);
+        // Store all the laser reading in the vector
+        robot::lasers.push_back(laser->ranges[i]);
     }
 }
 
@@ -51,18 +51,18 @@ void robot::scanCallback(const sensor_msgs::LaserScan::ConstPtr& laser) {
  * @return true if there is obstacle or false if there is not obstacle
  */
 bool robot::obstacle(std::vector<double> laserscans) {
-	// Select minimum from all the laser readings 
-	double min = 65.0;
-	for (int i = 0; i < laserscans.size(); i++) {
-	    if (laserscans[i] < min) {
-	      	min = laserscans[i];
-	    }
-	}
-	// std::cout << "Min: " << min << std::endl;
+    // Select minimum from all the laser readings
+    double min = 65.0;
+    for (int i = 0; i < laserscans.size(); i++) {
+        if (laserscans[i] < min) {
+            min = laserscans[i];
+        }
+    }
+    // std::cout << "Min: " << min << std::endl;
 
-	// Check if there is obstacle near the robot or not and return false or true
-	if (min < 0.55) 
-		return true;
-	else 
-		return false;
+    // Check if there is obstacle near the robot or not and return false or true
+    if (min < 0.55)
+       return true;
+    else
+        return false;
 }

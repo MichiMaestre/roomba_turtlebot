@@ -12,7 +12,7 @@
 
 
   <node pkg = "rosbag" name= "rosbag_record_all" type= "record"
-  		args = "-a -x /camera/(.*) -O bagfile " output = "screen" 
+  		args = "-a -x /camera/(.*) -O roomba_bag " output = "screen" 
   		if="$(eval rosbagFlag == true)">
   </node>
 

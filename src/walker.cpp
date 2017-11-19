@@ -37,46 +37,45 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * @return 0 if everything works correctly
  */
 int main(int argc, char **argv) {
+    // Create node and handler
+    ros::init(argc, argv, "walker");
 
-	// Create node and handler
-	ros::init(argc, argv, "walker");
+    ros::NodeHandle n;
 
-	ros::NodeHandle n;
+    robot turtle;
+    geometry_msgs::Twist velocity;
 
-	robot turtle;
-	geometry_msgs::Twist velocity;
+    // Publisher
+    ros::Publisher pub = n.advertise<geometry_msgs::Twist>
+        ("/cmd_vel_mux/input/teleop", 1000);
+    // Subscriber
+    ros::Subscriber sub = n.subscribe("/scan",
+        100, &robot::scanCallback, &turtle);
 
-	// Publisher
-	ros::Publisher pub = n.advertise<geometry_msgs::Twist>("/cmd_vel_mux/input/teleop", 1000);
-	// Subscriber
-	ros::Subscriber sub = n.subscribe("/scan", 100, &robot::scanCallback, &turtle);
+    ros::Rate loop_rate(10);
 
-	ros::Rate loop_rate(10);
+    while (ros::ok()) {
+        // If there is no obstacle, move forward
+        if (!turtle.obstacle(turtle.lasers)) {
+            ROS_INFO("All clear");
 
-  	while (ros::ok()) {
-		
-		// If there is no obstacle, move forward
-		if (!turtle.obstacle(turtle.lasers)) {
-			ROS_INFO("All clear");
+            velocity.linear.x = 0.2;
+            velocity.angular.z = 0.0;
+        }
 
-			velocity.linear.x = 0.2;
-			velocity.angular.z = 0.0;
+        // If there is obstacle, rotate until there is no obstacle
+        if (turtle.obstacle(turtle.lasers)) {
+            ROS_INFO("Obstacle");
 
-		}
+            velocity.linear.x = 0.0;
+            velocity.angular.z = 0.2;
+        }
 
-		// If there is obstacle, rotate until there is no obstacle
-		if (turtle.obstacle(turtle.lasers)) {
-			ROS_INFO("Obstacle");
+        // Publish the velocity commands
+        pub.publish(velocity);
 
-			velocity.linear.x = 0.0;
-			velocity.angular.z = 0.2;
-		}
-
-		// Publish the velocity commands
-		pub.publish(velocity);
-
-		ros::spinOnce();
-    	loop_rate.sleep();
-	}
-	return 0;
+        ros::spinOnce();
+        loop_rate.sleep();
+    }
+    return 0;
 }

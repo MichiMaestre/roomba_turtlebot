@@ -34,9 +34,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * @brief Definition of the robot class. Functions are scanCallback and obstacle. lasers contains current laser readings.
  */
 class robot {
-	public:
-		std::vector<double> lasers;
-		void scanCallback(const sensor_msgs::LaserScan::ConstPtr& laser);
+ public:
+    std::vector<double> lasers;
+    void scanCallback(const sensor_msgs::LaserScan::ConstPtr& laser);
 
-		bool obstacle(std::vector<double> laserscans);
+    bool obstacle(std::vector<double> laserscans);
 };
