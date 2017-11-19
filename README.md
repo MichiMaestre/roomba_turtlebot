@@ -68,5 +68,10 @@ rosbag info roomba_bag.bag
 
 `roslaunch roomba_turtlebot roomba.launch` or `roslaunch roomba_turtlebot roomba.launch rosbagFlag:=false`
 
+## Bag file playback
 
+Once the bag file is generated, we can replay it by running the following command in the directory where the bag file is*:
 
+`rosbag play roomba_bag.bag`
+
+*(Since Gazebo should not be running for the replay, `roscore` has to be launched in a first terminal)
