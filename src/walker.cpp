@@ -20,7 +20,15 @@ int main(int argc, char **argv) {
 	ros::Publisher pub = n.advertise<geometry_msgs::Twist>("/cmd_vel_mux/input/teleop", 1000);
 	ros::Subscriber sub = n.subscribe("/scan", 1000, &robot::scanCallback, &turtle);
 
-	ros::spin();
 
+	int count = 0;
+  	while (ros::ok()) {
+		
+		turtle.obstacle(turtle.lasers);
+
+
+		ros::spinOnce();
+    	loop_rate.sleep();
+	}
 	return 0;
 }
