@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <string>
 #include "ros/ros.h"
+#include "ros/console.h"
 #include "robot.hpp"
 
 int main(int argc, char **argv) {
@@ -25,17 +26,17 @@ int main(int argc, char **argv) {
   	while (ros::ok()) {
 		
 		if (!turtle.obstacle(turtle.lasers)) {
-			// std::cout << "All clear" << std::endl;
+			ROS_INFO("All clear");
 
 			velocity.linear.x = 0.2;
 			velocity.angular.z = 0.0;
 
 		}
 		if (turtle.obstacle(turtle.lasers)) {
-			// std::cout << "Obstacle" << std::endl;
+			ROS_INFO("Obstacle");
 
 			velocity.linear.x = 0.0;
-			velocity.angular.z = 0.3;
+			velocity.angular.z = 0.2;
 		}
 
 		pub.publish(velocity);
