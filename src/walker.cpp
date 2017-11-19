@@ -38,6 +38,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 int main(int argc, char **argv) {
 
+	// Create node and handler
 	ros::init(argc, argv, "walker");
 
 	ros::NodeHandle n;
@@ -45,13 +46,16 @@ int main(int argc, char **argv) {
 	robot turtle;
 	geometry_msgs::Twist velocity;
 
+	// Publisher
 	ros::Publisher pub = n.advertise<geometry_msgs::Twist>("/cmd_vel_mux/input/teleop", 1000);
+	// Subscriber
 	ros::Subscriber sub = n.subscribe("/scan", 100, &robot::scanCallback, &turtle);
 
 	ros::Rate loop_rate(10);
 
   	while (ros::ok()) {
 		
+		// If there is no obstacle, move forward
 		if (!turtle.obstacle(turtle.lasers)) {
 			ROS_INFO("All clear");
 
@@ -59,6 +63,8 @@ int main(int argc, char **argv) {
 			velocity.angular.z = 0.0;
 
 		}
+
+		// If there is obstacle, rotate until there is no obstacle
 		if (turtle.obstacle(turtle.lasers)) {
 			ROS_INFO("Obstacle");
 
@@ -66,6 +72,7 @@ int main(int argc, char **argv) {
 			velocity.angular.z = 0.2;
 		}
 
+		// Publish the velocity commands
 		pub.publish(velocity);
 
 		ros::spinOnce();

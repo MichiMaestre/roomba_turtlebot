@@ -1,0 +1,19 @@
+<launch>
+
+  <arg name="rosbagFlag" default= "false"/>
+  
+  <include file="$(find turtlebot_gazebo)/launch/turtlebot_world.launch">
+    <arg name="world_file" value ="$(find turtlebot_gazebo)/worlds/corridor.world"/>
+  </include>
+
+
+  <node pkg="roomba_turtlebot" name="walker" type="walker" output= "screen">
+  </node>
+
+
+  <node pkg = "rosbag" name= "rosbag_record_all" type= "record"
+  		args = "-a -x /camera/(.*) -O bagfile " output = "screen" 
+  		if="$(eval rosbagFlag == true)">
+  </node>
+
+</launch>
