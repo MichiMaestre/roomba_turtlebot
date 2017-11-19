@@ -70,8 +70,18 @@ rosbag info roomba_bag.bag
 
 ## Bag file playback
 
-Once the bag file is generated, we can replay it by running the following command in the directory where the bag file is*:
+Once the bag file is generated, we can replay it by running the following commands in the directory where the bag file is*:
 
-`rosbag play roomba_bag.bag`
+```
+rosbag play roomba_bag.bag
+```
+
+The bag file inside the results folder was compressed due to size issues, to run it, follow the next commands:
+
+```
+cd ~/ros_ws/src/roomba_turtlebot/results
+rosbag decompress -f roomba_bag.bag
+rosbag play roomba_bag.bag
+```
 
 *(Since Gazebo should not be running for the replay, `roscore` has to be launched in a first terminal)
