@@ -27,7 +27,7 @@ catkin_make
 ```
 cd ros_ws
 cd src
-git clone https://github.com/MichiMaestre/roomba-turtlebot.git
+git clone https://github.com/MichiMaestre/roomba_turtlebot.git
 cd ..
 catkin_make
 ```
